@@ -12,7 +12,9 @@ const {dbConnection} =require('./DB/config')
 
 //const passportLocalMoongose = require('passport-local-mongoose')
 
-const port = 4000;
+const port = process.env.PORT || 4000; // Use process.env.PORT if defined, otherwise default to 3000
+const hostname = "0.0.0.0"; // Listen on all available network interfaces
+
 const app = express();
 
 app.use(bodyParser.urlencoded({extended: true}));
@@ -215,47 +217,46 @@ app.post("/delete/:itemId", async function(req, res){
     res.status(500).send("Error interno del servidor al eliminar el elemento");
   }
 });
-//editar elementos
-// app.post("/edit/:itemId", async function(req, res){
-//   const itemId = req.params.itemId;
-//   const { name, price } = req.body;
-//   console.log(itemId,name,price)
-//   try {
-//     // Encontrar el elemento por ID y actualizar sus campos
-//     await Items.updateMany({_id: itemId}, {
-//       name: name,
-//       price: price
-//     });
-  
-//     // Redirigir a la página principal después de editar el elemento
-//     res.redirect("/");
-//   } catch (error) {
-//     console.error("Error al editar el elemento:", error);
-//     res.status(500).send("Error interno del servidor al editar el elemento");
-//   }
-// });
-//actuaizar checkBox
-// app.patch("/editCheck/:itemId", async function(req, res){
-//   const itemId = req.params.itemId;
-//   const { check } = req.body;
-//   console.log(itemId,check)
-//   try {
-//     // Encontrar el elemento por ID y actualizar sus campos
-//     await Items.updateMany({_id: itemId}, {
-//       check:check
-//     });
-  
-//     // Redirigir a la página principal después de editar el elemento
-//     res.status(200).send("Elemento actualizado correctamente");
-//   } catch (error) {
-//     console.error("Error al editar el elemento:", error);
-//     res.status(500).send("Error interno del servidor al editar el elemento");
-//   }
-// });
 
 
+app.listen(port, hostname, () => {
+  console.log(`Server running at http://${hostname}:${port}/`);
+}); 
 
-app.listen(process.env.PORT || port, () => {
-    console.log(`at http://localhost:${port}`)
-    //console.log(`at http://localhost:${process.env.PORT}`);
-  })
+  //editar elementos
+  // app.post("/edit/:itemId", async function(req, res){
+  //   const itemId = req.params.itemId;
+  //   const { name, price } = req.body;
+  //   console.log(itemId,name,price)
+  //   try {
+  //     // Encontrar el elemento por ID y actualizar sus campos
+  //     await Items.updateMany({_id: itemId}, {
+  //       name: name,
+  //       price: price
+  //     });
+    
+  //     // Redirigir a la página principal después de editar el elemento
+  //     res.redirect("/");
+  //   } catch (error) {
+  //     console.error("Error al editar el elemento:", error);
+  //     res.status(500).send("Error interno del servidor al editar el elemento");
+  //   }
+  // });
+  //actuaizar checkBox
+  // app.patch("/editCheck/:itemId", async function(req, res){
+  //   const itemId = req.params.itemId;
+  //   const { check } = req.body;
+  //   console.log(itemId,check)
+  //   try {
+  //     // Encontrar el elemento por ID y actualizar sus campos
+  //     await Items.updateMany({_id: itemId}, {
+  //       check:check
+  //     });
+    
+  //     // Redirigir a la página principal después de editar el elemento
+  //     res.status(200).send("Elemento actualizado correctamente");
+  //   } catch (error) {
+  //     console.error("Error al editar el elemento:", error);
+  //     res.status(500).send("Error interno del servidor al editar el elemento");
+  //   }
+  // });
